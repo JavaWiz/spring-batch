@@ -32,7 +32,6 @@ public class BatchConfiguration {
     @Autowired
     private PeopleRepository peopleRepository;
 
-    // tag::readerwriterprocessor[]
     /**
      * 
      * @return FlatFileItemReader
@@ -80,9 +79,11 @@ public class BatchConfiguration {
         return new RepositoryItemWriterBuilder<People>()
                 .methodName("save").repository(peopleRepository).build();
     }
-    // end::readerwriterprocessor[]
-
-    // tag::jobstep[]
+    
+    @Autowired
+    JobCompletionNotificationListener listener;
+    @Autowired
+    Step step;
     /**
      * 
      * @param listener
@@ -90,11 +91,11 @@ public class BatchConfiguration {
      * @return
      */
     @Bean
-    public Job importUserJob(JobCompletionNotificationListener listener, Step step1) {
+    public Job importUserJob() {
         return jobBuilderFactory.get("importUserJob")
             .incrementer(new RunIdIncrementer())
             .listener(listener)
-            .flow(step1)
+            .flow(step)
             .end()
             .build();
     }
@@ -113,5 +114,4 @@ public class BatchConfiguration {
             .writer(writer)
             .build();
     }
-    // end::jobstep[]
 }
