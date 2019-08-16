@@ -25,7 +25,8 @@ public class JobScheduler {
 	Job job;
 	
 	//batch job will run every one minute after application is started.
-	@Scheduled(cron = "0 */1 * * * ?")
+	//@Scheduled(cron = "0 */1 * * * ?")
+	@Scheduled(cron = "0 18 16 1/1 * ?")
 	public void perform() throws Exception {
 
 		log.debug("Job Started at : {} ", new Date());

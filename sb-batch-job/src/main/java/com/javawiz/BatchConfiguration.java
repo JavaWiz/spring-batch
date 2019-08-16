@@ -82,7 +82,7 @@ public class BatchConfiguration {
 	@Bean
 	public Step step1() {
 		return stepBuilderFactory.get("step1")
-				.<User, UserEntity>chunk(10)
+				.<User, UserEntity>chunk(0)
 				.reader(reader())
 				.processor(processor())
 				.writer(userWriter()).build();
